@@ -13,7 +13,7 @@
 QINIU_ACCESS_KEY = ''
 QINIU_SECRET_KEY = ''
 QINIU_BUCKET = ''
-QINIU_DOMIAN = ''
+QINIU_DOMIAN = '' # why need this?
 ```
 
 * 监视路径（同步目录）
@@ -33,4 +33,8 @@ FILE_FILTER = [r'(.*)/\.(.*)']
 
 ## Run
 `python run.py`
+
+
+## Why need this?
+如果想用七牛做图床，往blog文章贴图的话，把图片拖到文件夹，Ctrl+V就可以得到可访问的链接
 
