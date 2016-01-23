@@ -27,8 +27,7 @@ FILE_FILTER = [r'(.*)/\.(.*)']
 ```
 避免不需要上传的文件改动触发同步
 
-* 过滤上传文件
-
+* 过滤上传文件  
 可据需通过[gitignore.io](https://www.gitignore.io/)生成.qrsignore.txt，过滤不需要上传的文件。
 
 
