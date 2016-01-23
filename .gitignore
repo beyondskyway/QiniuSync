@@ -1,0 +1,6 @@
+.vscode
+.DS_Store
+.idea
+site-packages
+dev_server.py
+*.pyc
