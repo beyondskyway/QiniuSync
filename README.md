@@ -9,19 +9,26 @@
 
 ## Configuration
 * 七牛信息
+```
 QINIU_ACCESS_KEY = ''
 QINIU_SECRET_KEY = ''
 QINIU_BUCKET = ''
 QINIU_DOMIAN = ''
+```
 
 * 监视路径（同步目录）
+```
 WATCH_PATH = ('E:/SkyDrive', 'E:/SkyWatcher', 'E:/Diagram')
+```
 
 * 过滤触发同步
-避免不需要上传的文件改动触发同步
+```
 FILE_FILTER = [r'(.*)/\.(.*)']
+```
+避免不需要上传的文件改动触发同步
 
 * 过滤上传文件
+
 可据需通过[gitignore.io](https://www.gitignore.io/)生成.qrsignore.txt，过滤不需要上传的文件。
 
 
