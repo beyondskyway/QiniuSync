@@ -3,8 +3,8 @@
 
 ## Dependencies
 * [pywin32](http://sourceforge.net/projects/pywin32/files/pywin32/Build%20220/)
-* [watchdog](http://developer.qiniu.com/docs/v6/tools/qrsync.html)
-* [七牛同步工具qrsync](https://github.com/gorakhargosh/watchdog)
+* [watchdog](https://github.com/gorakhargosh/watchdog)
+* [七牛同步工具qrsync](http://developer.qiniu.com/docs/v6/tools/qrsync.html)
 
 
 ## Configuration
