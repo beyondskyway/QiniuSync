@@ -137,10 +137,7 @@ class QiniuSync():
         def quit_sync():
             self.stop_watch()
         # 最小化到托盘
-        if PY2:
-            SysTrayIcon(icons.next(), hover_text, menu_options=(), on_quit=quit_sync, default_menu_index=1, wnd=wnd)
-        else:
-            SysTrayIcon(next(icons), hover_text, menu_options=(), on_quit=quit_sync, default_menu_index=1, wnd=wnd)
+        SysTrayIcon(next(icons), hover_text, menu_options=(), on_quit=quit_sync, default_menu_index=1, wnd=wnd)
 
     # 输出信息
     def summary(self):
