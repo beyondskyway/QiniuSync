@@ -4,8 +4,9 @@ __version__ = '1.0'
 
 import os
 import sys
-
-reload(sys).setdefaultencoding('UTF-8')
+PY2 = sys.version_info[0]=='2'
+if PY2:
+    reload(sys).setdefaultencoding('UTF-8')
 
 
 import time
@@ -16,7 +17,10 @@ from watchdog.events import RegexMatchingEventHandler
 import config
 import json
 import hashlib
-import urllib2
+if PY2:
+    import urllib2
+else:
+    import urllib.request
 
 
 current_dir = os.path.split(os.path.realpath(__file__))[0]
@@ -65,7 +69,10 @@ class QiniuSync():
                                 '&key_prefix=' + dir_str + '/'
             json_data["debug_level"] = 1
             # 根据路径生成文件名
-            filename = str(hashlib.md5(path).hexdigest()) + '.json'
+            if PY2:
+                filename = str(hashlib.md5(path).hexdigest()) + '.json'
+            else:
+                filename = str(hashlib.md5(path.encode("utf8")).hexdigest()) + '.json'
             # 文件不存在则重新创建配置文件
             if not os.path.isfile(filename):
                 with open(filename, 'w') as f:
@@ -73,11 +80,11 @@ class QiniuSync():
 
     # 拷贝屏蔽文件到同步目录(.qrsignore.txt)
     def copy_ignorefile(self):
-        src = file(current_dir + '\.qrsignore.txt', 'r+')
+        src = open(current_dir + '\.qrsignore.txt', 'r+')
         for path in self.paths:
             des_path = path + '/.qrsignore.txt'
             if not os.path.isfile(des_path):
-                des = file(des_path, 'w+')
+                des = open(des_path, 'w+')
                 des.writelines(src.read())
                 des.close()
             else:
@@ -130,7 +137,10 @@ class QiniuSync():
         def quit_sync():
             self.stop_watch()
         # 最小化到托盘
-        SysTrayIcon(icons.next(), hover_text, menu_options=(), on_quit=quit_sync, default_menu_index=1, wnd=wnd)
+        if PY2:
+            SysTrayIcon(icons.next(), hover_text, menu_options=(), on_quit=quit_sync, default_menu_index=1, wnd=wnd)
+        else:
+            SysTrayIcon(next(icons), hover_text, menu_options=(), on_quit=quit_sync, default_menu_index=1, wnd=wnd)
 
     # 输出信息
     def summary(self):
@@ -144,7 +154,10 @@ class QiniuSync():
 
 # 执行同步
 def qiniu_syn(path):
-    filename = str(hashlib.md5(path).hexdigest()) + '.json'
+    if PY2:
+        filename = str(hashlib.md5(path).hexdigest()) + '.json'
+    else:
+        filename = str(hashlib.md5(path.encode("utf8")).hexdigest()) + '.json'
     cmd = current_dir + '\qrsync.exe ' + current_dir + '\\' + filename
     os.system(cmd)
 
@@ -161,7 +174,10 @@ class QiniuSyncEventHandler(RegexMatchingEventHandler):
         dir_str = get_foldername(self.path)
         # 生成链接
         src_path = event.src_path
-        url = config.QINIU_DOMIAN + (dir_str + src_path.replace(self.path, '')).replace('\\', urllib2.quote('/'))
+        if PY2:
+            url = config.QINIU_DOMIAN + (dir_str + src_path.replace(self.path, '')).replace('\\', urllib2.quote('/'))
+        else:
+            url = config.QINIU_DOMIAN + (dir_str + src_path.replace(self.path, '')).replace('\\', urllib.request.quote('/'))
         copy_to_clipboard(url)
 
     def on_moved(self, event):
