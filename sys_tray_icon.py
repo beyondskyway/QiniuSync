@@ -249,4 +249,4 @@ if __name__ == '__main__':
                    )
     def bye(sysTrayIcon): print('Bye, then.')
 
-    SysTrayIcon(icons.next(), hover_text, menu_options, on_quit=bye, default_menu_index=1)
+    SysTrayIcon(next(icons), hover_text, menu_options, on_quit=bye, default_menu_index=1)
